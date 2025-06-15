@@ -1,0 +1,75 @@
+services:
+  rabbitmq:
+    # RabbitMQ - Message Broker 
+    image: rabbitmq:3.13-management
+    container_name: microresume-rabbitmq
+    ports:
+      - "5672:5672"  # AMQP Port
+      - "15672:15672" #Management UI Port
+    environment: 
+      RABBITMQ_DEFAULT_USER : admin
+      RABBITMQ_DEFAULT_PASS : password123
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - microresume_network
+    healthcheck:
+      test: ["CMD","rabbitmq-diagnostics","ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5 
+
+  postgres:
+    # PostgreSQL Database
+    image: postgres:16
+    container_name: microresume_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: microresume_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microresume_network
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5  
+  
+  upload-services:
+    build:
+      context: ./services/upload-service
+      dockerfile: Dockerfile 
+    container_name: microresume_upload
+    ports:
+      - "5001:5000"
+    environment:
+      - RABBITMQ_URL=amqp://admin:password123@rabbitmq:5672/
+      - DATABASE_URL=postgresql://postgres:postgres123@postgres:5432/microresume_db
+      - UPLOAD_FOLDER=/app/uploads
+    volumes:
+      - ./shared/uploads:/app/uploads
+      - ./shared/logs:/app/logs
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - microresume_network
+    restart: unless-stopped
+
+    
+networks:
+  microresume_network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:
+    driver: local
+  postgres_data:
+    driver: local
