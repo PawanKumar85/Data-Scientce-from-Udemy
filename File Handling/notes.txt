@@ -1,0 +1,19 @@
+# What is File Handling?
+- It means opening, reading, writing, appending, or deleting files using Python.
+- You use it when you want your program to store data permanently, like in .txt, .csv, .json, etc.
+
+# You can use Python to:
+- Read content from it
+- Write new content
+- Add more lines
+- Delete it
+
+# Step-by-Step Learning Path:
+
+## What is a file?
+1. How to open a file
+2. How to read content
+3. How to write/append
+4. How to use with statement
+5. How to handle errors
+6. How to delete files
