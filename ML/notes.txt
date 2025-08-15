@@ -1,0 +1,45 @@
+Steps Before Machine Learning 
+1. Collecting Data
+2. Perform EDA (Exploratory Data Analysis)
+    * Discover some Patter
+    * Spot Anomalies
+    * Generate Insides
+    * Decide what to do next 
+
+    2.1 Viewing the Data (Head, tail)
+    2.2 Summary of the data (min, max, std, mean, median, mode)
+    2.3 Value Count
+    2.4 Missing Value Analysis
+    2.5 Visualization
+    2.6 Target Variable Exploration
+    
+3. Data Cleaning 
+    3.1 Handling Null Values
+    3.2 Drop Missing Rows and Column 
+                or 
+        Fill With (Mean, Median & Mode)
+    3.3 Removing Duplicate Rows
+    3.4 Fix Data Types
+    3.5 Handling inconsistent Categories
+    3.6 Detect and handling Outliers
+    3.7 Fix Logical or Domain Error
+
+4. Data Preprocessing
+
+    4.1 Encoding Categorical Variables
+    4.2 Feature Transformation
+    4.3 Feature Scaling 
+    *  Normalization
+    * Standardization Scaling 
+
+5. Feature Engineering
+
+6. Feature Selection  
+    * Reduce Noise & Overfitting 
+    * Speeds up traings
+    * Improve model accuracy
+    * Make model interpretation easier
+    
+    6.1 Filter methods
+    6.2 Embedded Methods
+    
